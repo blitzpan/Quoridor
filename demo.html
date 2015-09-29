@@ -2,9 +2,121 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>Quoridor demo</title>
+	<script src="./jquery-2.1.4.js" language="javaScript" type="text/javascript"></script>
+	<style>
+		.container{
+			width:800px;
+			margin:0 auto;
+			background:#eeeeee;
+		}
+		.border{
+			background:#6B2F2F;
+			width:530px;
+			height:530px;
+		}
+		.block{
+			width:50px;
+			height:50px;
+			background:#25221B;
+			float:left;
+		}
+		.verGap{
+			height:50px;
+			width:10px;
+			float:left;
+			background:green;
+		}
+		.horGap{
+			height:10px;
+			width:50px;
+			float:left;
+			background:yellow;
+		}
+		.join{
+			width:10px;
+			height:10px;
+			float:left;
+			background:blue;
+		}
+	</style>
 </head>
+<script>
+$(function(){
+	init();
+});
+function init(){
+	var block = "<div class='block'></div>";
+	var verGap = "<div class='verGap'></div>";
+	var horGap = "<div class='horGap'></div>";
+	var join = "<div class='join'></div>";
+	var border = $(".border");
+	for(var i=0; i<9; i++){
+		for(var j=0; j<9;j++){
+			border.append(block);
+			if(j!=8){
+				border.append(verGap);
+			}
+		}
+		for(var j=0; i!=8 && j<9; j++){
+			border.append(horGap);
+			if(j!=8){
+				border.append(join);
+			}
+		}
+		
+	}
+}
+</script>
 <body>
-	
+	<div class="container">
+		<div id="border" class="border">
+			<!--
+			<div class="block"></div>
+			<div class="verGap"></div>
+			<div class="block"></div>
+			<div class="verGap"></div>
+			<div class="block"></div>
+			<div class="verGap"></div>
+			<div class="block"></div>
+			<div class="verGap"></div>
+			<div class="block"></div>
+			<div class="verGap"></div>
+			<div class="block"></div>
+			<div class="verGap"></div>
+			<div class="block"></div>
+			<div class="verGap"></div>
+			<div class="block"></div>
+			<div class="verGap"></div>
+			<div class="block"></div>
+			-->
+			<!--水平间隔-->
+			<!--
+			<div class="horGap"></div>
+			<div class="join"></div>
+			<div class="horGap"></div>
+			<div class="join"></div>
+			<div class="horGap"></div>
+			<div class="join"></div>
+			<div class="horGap"></div>
+			<div class="join"></div>
+			<div class="horGap"></div>
+			<div class="join"></div>
+			<div class="horGap"></div>
+			<div class="join"></div>
+			<div class="horGap"></div>
+			<div class="join"></div>
+			<div class="horGap"></div>
+			<div class="join"></div>
+			<div class="horGap"></div>
+			-->
+
+
+
+
+
+
+		</div>
+	</div>
 </body>
 </html>
