@@ -21,6 +21,9 @@
 			background:#25221B;
 			float:left;
 		}
+		.block:hover{
+			background:gray;
+		}
 		.verGap{
 			height:50px;
 			width:10px;
@@ -39,84 +42,107 @@
 			float:left;
 			background:blue;
 		}
+		#p1{
+			width:50px;
+			height:50px;
+			background:red;
+			border-radius:25px;
+		}
 	</style>
 </head>
 <script>
+var bd = [];
+var curObj = null;
+var p1 = new createPlayer('p1','player');
+function createPlayer(name,type){
+	this.name = name;
+	this.type = type;
+	this.row = -1;
+	this.col = -1;
+}
 $(function(){
 	init();
+	initData();
+
 });
-function init(){
-	var block = "<div class='block'></div>";
-	var verGap = "<div class='verGap'></div>";
-	var horGap = "<div class='horGap'></div>";
-	var join = "<div class='join'></div>";
-	var border = $(".border");
-	for(var i=0; i<9; i++){
-		for(var j=0; j<9;j++){
-			border.append(block);
-			if(j!=8){
-				border.append(verGap);
+function blockClick(obj){
+	var row = $(obj).attr('row');
+	var col = $(obj).attr('col');
+	console.log('click');
+
+	if(curObj == null){
+		console.log('没有选择对象');
+		return;
+	}else{
+		if(curObj=='p1'){
+			if(p1.row==-1 && p1.col==-1){
+				console.log('走的第一步');
+			}else{
+				console.log('p' + p1.row + '--' + p1.col);
+				console.log('b' + row + '--' + col);
+
+			
+				if(((row==p1.row) && (p1.col-2==col)) || ((row==p1.row) && (p1.col==col-2)) || ((col==p1.col) && (p1.row-2==row)) || ((col==p1.col) && (p1.row==row-2))){
+					console.log('通过校验');
+				}else{
+					console.log('没有通过校验');
+					return;
+				}
 			}
+			bd[row][col] = curObj;
+			$(obj).append($("#p1"));
+			p1.row=row;
+			p1.col=col;
+
+		}else{
+			console.log('非p1');
 		}
-		for(var j=0; i!=8 && j<9; j++){
-			border.append(horGap);
-			if(j!=8){
+	}
+
+	if(bd[row][col] == null){
+		console.log('不存在');
+	}else{
+		console.log('已经存在');
+	}
+}
+function setCurObj(name){
+	console.log(name);
+	curObj = name;
+}
+function initData(){
+	for(var i=0; i<17; i++){//js声明二维数组比较麻烦，需要先声明一维，再声明二维
+		bd[i] = [];
+		for(var j=0; j<17; j++){
+
+		}
+	}
+}
+function init(){
+	var border = $("#border");
+	for(var i=0; i<17; i++){
+		for(var j=0; j<17; j++){
+			if(i%2==0 && j%2==0){//奇数行、奇数列。是block
+				var block = "<div class='block' row='"+i+"' col='"+j+"' onclick='blockClick(this);'></div>";
+				border.append(block);
+			}else if(i%2==0 && j%2!=0){//奇数行、偶数列。是verGap
+				var verGap = "<div class='verGap' row='"+i+"' col='"+j+"' click='click(this);'></div>";
+				border.append(verGap);
+			}else if(i%2!=0 && j%2==0){//偶数行、奇数列。是horGap
+				var horGap = "<div class='horGap' row='"+i+"' col='"+j+"' click='click(this);'></div>";
+				border.append(horGap);
+			}else{
+				var join = "<div class='join' row='"+i+"' col='"+j+"' click='click(this);'></div>";
 				border.append(join);
 			}
 		}
-		
 	}
 }
 </script>
 <body>
 	<div class="container">
 		<div id="border" class="border">
-			<!--
-			<div class="block"></div>
-			<div class="verGap"></div>
-			<div class="block"></div>
-			<div class="verGap"></div>
-			<div class="block"></div>
-			<div class="verGap"></div>
-			<div class="block"></div>
-			<div class="verGap"></div>
-			<div class="block"></div>
-			<div class="verGap"></div>
-			<div class="block"></div>
-			<div class="verGap"></div>
-			<div class="block"></div>
-			<div class="verGap"></div>
-			<div class="block"></div>
-			<div class="verGap"></div>
-			<div class="block"></div>
-			-->
-			<!--水平间隔-->
-			<!--
-			<div class="horGap"></div>
-			<div class="join"></div>
-			<div class="horGap"></div>
-			<div class="join"></div>
-			<div class="horGap"></div>
-			<div class="join"></div>
-			<div class="horGap"></div>
-			<div class="join"></div>
-			<div class="horGap"></div>
-			<div class="join"></div>
-			<div class="horGap"></div>
-			<div class="join"></div>
-			<div class="horGap"></div>
-			<div class="join"></div>
-			<div class="horGap"></div>
-			<div class="join"></div>
-			<div class="horGap"></div>
-			-->
-
-
-
-
-
-
 		</div>
+		<div id="p1" onclick="setCurObj('p1')"></div>
 	</div>
 </body>
 </html>
